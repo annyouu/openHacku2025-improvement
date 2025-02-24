@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果判定</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffb0019;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            max-width: 100%;
+            font-size: calc(1.5em + 1vw);
+            color: #333;
+            background-color: #f6f0ad;
+            padding: 20px 118px;
+            margin: 0 0 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            margin-top: 40px;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10x rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f6f0ad;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table td {
+            background-color: white;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        table th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        table tr:last-child td:first-child {
+            border-bottom-left-radius: 8px;
+        }
+
+        table tr:last-child td:last-child {
+            border-bottom-right-radius: 8px;
+        }
+
+        a {
+            color: #8b54cf;
+            font-size: 1.1em;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        a:hover {
+            color: #574cae;
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .calorie-comparison {
+            border: 2px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .calorie-status {
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: calc(1.2em + 1vw);
+                padding: 15px 50px;
+            }
+
+            table {
+                width: 107%;
+                margin: 10px 0;
+                border-spacing: 0;
+            }
+
+            th,
+            td {
+                font-size: 14px;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            td {
+                text-align: center;
+            }
+
+            img {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>結果</h1>
+
+    <!-- 朝食-->
+    {% if filename_morning %}
+    <h2>朝食</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filename_morning )}}" width="300">
+
+    {% if nutrition_info_morning %}
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>カロリー</th>
+                <th>炭水化物</th>
+                <th>たんぱく質</th>
+                <th>脂質</th>
+                <th>食物繊維</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for food in nutrition_info_morning %}
+            <tr>
+                <td>{{ food['food_name'] }}</td>
+                <td>{{ food['calories']['value']}} {{ food['calories']['unit'] }} </td>
+                <td>{{ food['carbs']['value'] }} {{ food['carbs']['unit'] }}</td>
+                <td>{{ food['protein']['value'] }} {{ food['protein']['unit'] }}</td>
+                <td>{{ food['fat']['value'] }} {{ food['fat']['unit'] }}</td>
+                <td>{{ food['fiber']['value'] }} {{ food['fiber']['unit'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>朝食の合計カロリー: </strong>{{ total_calories_morning }} kcal</p>
+    {% endif %}
+    {% endif %}
+
+
+    <!-- 昼食 -->
+    {% if filename_noon %}
+    <h2>昼食</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filename_noon )}}" width="300">
+
+    {% if nutrition_info_noon %}
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>カロリー</th>
+                <th>炭水化物</th>
+                <th>たんぱく質</th>
+                <th>脂質</th>
+                <th>食物繊維</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for food in nutrition_info_noon %}
+            <tr>
+                <td>{{ food['food_name'] }}</td>
+                <td>{{ food['calories']['value'] }} {{ food['calories']['unit'] }}</td>
+                <td>{{ food['carbs']['value'] }} {{ food['carbs']['unit'] }}</td>
+                <td>{{ food['protein']['value'] }} {{ food['protein']['unit'] }}</td>
+                <td>{{ food['fat']['value'] }} {{ food['fat']['unit'] }}</td>
+                <td>{{ food['fiber']['value'] }} {{ food['fiber']['unit'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>昼食の合計カロリー: </strong>{{ total_calories_noon }} kcal</p>
+    {% endif %}
+    {% endif %}
+
+    <!-- 夕食 -->
+    {% if filename_night %}
+    <h2>夕食</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filename_night )}}" width="300">
+
+    {% if nutrition_info_night %}
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>カロリー</th>
+                <th>炭水化物</th>
+                <th>たんぱく質</th>
+                <th>脂質</th>
+                <th>食物繊維</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for food in nutrition_info_night %}
+            <tr>
+                <td>{{ food['food_name'] }}</td>
+                <td>{{ food['calories']['value'] }} {{ food['calories']['unit'] }}</td>
+                <td>{{ food['carbs']['value'] }} {{ food['carbs']['unit'] }}</td>
+                <td>{{ food['protein']['value'] }} {{ food['protein']['unit'] }}</td>
+                <td>{{ food['fat']['value'] }} {{ food['fat']['unit'] }}</td>
+                <td>{{ food['fiber']['value'] }} {{ food['fiber']['unit'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>夕食の合計カロリー: </strong>{{ total_calories_night }} kcal</p>
+    {% endif %}
+    {% endif %}
+
+    <!-- ユーザーが追加した食事の表示 -->
+    {% if additional_meals %}
+    {% for meal in additional_meals %}
+    <h2>{{ meal.name }}</h2>
+    <img src="{{ url_for('static', filename='uploads/' + meal.filename) }}" width="300">
+    {% if meal.nutrition_info %}
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>カロリー</th>
+                <th>炭水化物</th>
+                <th>たんぱく質</th>
+                <th>脂質</th>
+                <th>食物繊維</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for food in meal.nutrition_info %}
+            <tr>
+                <td>{{ food['food_name'] }}</td>
+                <td>{{ food['calories']['value'] }} {{ food['calories']['unit'] }}</td>
+                <td>{{ food['carbs']['value'] }} {{ food['carbs']['unit'] }}</td>
+                <td>{{ food['protein']['value'] }} {{ food['protein']['unit'] }}</td>
+                <td>{{ food['fat']['value'] }} {{ food['fat']['unit'] }}</td>
+                <td>{{ food['fiber']['value'] }} {{ food['fiber']['unit'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>{{ meal.name }}の合計カロリー: </strong> {{ meal.total_calories }} kcal</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- 1日の合計カロリー -->
+    <p><strong>1日の合計カロリー:</strong> {{ daily_total_calories }} kcal</p>
+
+    <div class="calorie-comparison">
+        <h2>基準との比較</h2>
+        <p><strong>推奨摂取カロリー:</strong> {{ calorie_comparison.recommended_calories }} kcal</p>
+        <p><strong>差:</strong> {{ calorie_comparison.calorie_difference }} kcal</p>
+        <p><strong>カロリー状態:</strong> {{ calorie_comparison.calorie_status }}</p>
+
+        <!-- 追加機能: 成功メッセージやエラー表示 -->
+        <div class="calorie-status">
+            {% if calorie_comparison.calorie_status == "不足" %}
+            <p style="color: black;">カロリーが不足しています。もっと食事を追加しましょう！</p>
+            {% elif calorie_comparison.calorie_status == "超過" %}
+            <p style="color: red;">カロリーが超過しています。食事の量を減らしましょう！</p>
+            {% else %}
+            <p style="color: green;">カロリーは適正です。良い食事バランスを保っています！</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <a href="/">新しい画像をアップロードする</a>
+</body>
+
+</html>

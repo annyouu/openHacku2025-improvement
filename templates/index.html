@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おむくん</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <h1>おむくん</h1>
+    <h2>画像をアップロードしよう！！</h2>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-container">
+            <h3>朝</h3>
+            <label for="morning-file" class="file-label">朝食の写真を撮る</label>
+            <input type="file" id="morning-file" name="morning_file" accept="image/*" class="file-input">
+            <span class="file-name" id="morning-file-name">選択されていません</span>
+        </div>
+
+        <div class="form-container">
+            <h3>昼</h3>
+            <label for="lunch-file" class="file-label">昼食の写真を撮る</label>
+            <input type="file" id="lunch-file" name="lunch_file" accept="image/*" class="file-input">
+            <span class="file-name" id="lunch-file-name">選択されていません</span>
+        </div>
+
+        <div class="form-container">
+            <h3>夜</h3>
+            <label for="dinner-file" class="file-label">夕食の写真を撮る</label>
+            <input type="file" id="dinner-file" name="dinner_file" accept="image/*" class="file-input">
+            <span class="file-name" id="dinner-file-name">選択されていません</span>
+        </div>
+
+        <button type="button" class="add-form-btn" onclick="showModal()">+ 食事を追加</button>
+
+
+        <button type="submit">解析</button>
+    </form>
+
+    <!-- モーダル -->
+    <div id="modalOverlay" style="display: none;">
+        <div class="modal-content">
+            <h3>食事名追加フォーム</h3>
+            <input type="text" id="modalFoodName" placeholder="食事名を入れてください (例：夜食)">
+            <br><br>
+            <div class="button-container">
+                <button type="button" onclick="registerModal()" class="register-btn">登録</button>
+                <button type="button" onclick="closeModal()" class="remove-btn">キャンセル</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
